@@ -1,0 +1,10 @@
+<ul class="nav nav-pills nav-stacked">
+  <li ng-repeat="folder in $ctrl.folders"
+      ng-class="{active: $ctrl.selectedFolder._id === folder._id}"
+      ng-click="$ctrl.selectFolder(folder)">
+    <a href="#">
+      {{folder.name}}
+      <span class="badge pull-right">{{folder.messages}}</span>
+    </a>
+  </li>
+</ul>

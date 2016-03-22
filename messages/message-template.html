@@ -1,0 +1,11 @@
+<td>
+  <span ng-if="message.isUnread"
+        class="label label-success">
+      New
+  </span>
+  &nbsp;
+  {{message.from}}
+</td>
+<td>{{message.to}}</td>
+<td>{{message.subject}}</td>
+<td>{{message.date | date:'dd/MM/yyyy'}}</td>

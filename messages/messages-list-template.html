@@ -1,0 +1,37 @@
+<div class="panel panel-primary"
+     ng-if="$ctrl.selectedFolder && !$ctrl.selectedMessage">
+  <div class="panel-heading">
+    {{$ctrl.selectedFolder.messages + ' messages in'}}
+    <b>{{$ctrl.selectedFolder.name}}</b>
+  </div>
+  <table class="table table-striped table table-hover">
+    <thead>
+      <tr>
+        <th>From</th>
+        <th>To</th>
+        <th>Subject</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="message in $ctrl.messages |
+        filter: {folderId: $ctrl.selectedFolder._id}"
+          ng-class="{warning: message.isImportant}"
+          message="message"
+          contacts=$ctrl.contacts
+          ng-click="$ctrl.selectMessage(message)">
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<message-view selected-folder="$ctrl.selectedFolder"
+              selected-message="$ctrl.selectedMessage"
+              as-unread="$ctrl.asUnread(message)"
+              as-important="$ctrl.asImportant(message)"
+              remove="$ctrl.remove(message)"
+              archive="$ctrl.archive(message)"
+              spam="$ctrl.spam(message)"
+              retrieve="$ctrl.retrieve(message)"
+              ng-if="$ctrl.selectedMessage">
+</message-view>

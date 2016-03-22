@@ -1,0 +1,11 @@
+<button type="button"
+        class="btn"
+        ng-click="$ctrl.asImportant({message: $ctrl.selectedMessage})"
+        ng-class="$ctrl.selectedMessage.isImportant ?
+                  'btn-success' : 'btn-warning'">
+  {{$ctrl.selectedMessage.isImportant ?
+    'Как обычное' : 'Как важное'}}
+  <span class="glyphicon"
+        ng-class="$ctrl.selectedMessage.isImportant ?
+                  'glyphicon-eye-close' : 'glyphicon-warning-sign'">
+</button>

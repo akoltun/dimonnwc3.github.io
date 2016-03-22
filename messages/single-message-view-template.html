@@ -1,0 +1,30 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <b>{{$ctrl.selectedMessage.subject}}</b> ({{$ctrl.selectedFolder.name}})
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <b>From:</b> {{$ctrl.selectedMessage.from}}
+    </li>
+    <li class="list-group-item">
+      <b>To:</b> {{$ctrl.selectedMessage.to}}
+    </li>
+    <li class="list-group-item">
+      <b>Date:</b> {{$ctrl.selectedMessage.date | date:'dd/MM/yyyy'}}
+    </li>
+    <li class="list-group-item">
+      <buttons selected-folder="$ctrl.selectedFolder"
+               selected-message="$ctrl.selectedMessage"
+               as-unread="$ctrl.asUnread"
+               as-important="$ctrl.asImportant"
+               remove="$ctrl.remove"
+               archive="$ctrl.archive"
+               spam="$ctrl.spam"
+               retrieve="$ctrl.retrieve">
+      </buttons>
+    </li>
+  </ul>
+  <div class="panel-body">
+    <p>{{$ctrl.selectedMessage.content}}</p>
+  </div>
+</div>

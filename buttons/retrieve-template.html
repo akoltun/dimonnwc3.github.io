@@ -1,0 +1,7 @@
+<button type="button"
+      class="btn btn-success"
+      ng-click="$ctrl.retrieve({message: $ctrl.selectedMessage})"
+      ng-if="$ctrl.selectedMessage.oldFolderId">
+  Вернуть в {{$ctrl.selectedMessage.oldFolderName}}
+  <span class="glyphicon glyphicon-share-alt"></span>
+</button>

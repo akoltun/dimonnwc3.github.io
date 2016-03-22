@@ -1,0 +1,11 @@
+<button type="button"
+        class="btn"
+        ng-click="$ctrl.asUnread({message: $ctrl.selectedMessage})"
+        ng-class="$ctrl.selectedMessage.isUnread ?
+                  'btn-success' : 'btn-primary'">
+  {{$ctrl.selectedMessage.isUnread ?
+    'Как прочитанное' : 'Как непрочитанное'}}
+  <span class="glyphicon"
+        ng-class="$ctrl.selectedMessage.isUnread ?
+                  'glyphicon-ok' : 'glyphicon-repeat'">
+</button>

@@ -1,0 +1,10 @@
+body {
+  margin-top: 40px;
+  background-color: #ccc;
+}
+
+.mailbox {
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 5px;
+}

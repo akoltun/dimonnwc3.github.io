@@ -1,0 +1,266 @@
+<!-- usercard -->
+<div class="panel panel-info">
+
+  <!-- usercard header -->
+  <div class="panel-heading">
+    <div class="row">
+
+      <!-- usercard avatar -->
+      <div class="col-xs-4">
+        <img ng-src="{{$ctrl.contact.avatar || 'http://placehold.it/140x140'}}"
+             class="img-responsive img-circle"
+             alt="Avatar">
+      </div>
+      <!-- end usercard avatar -->
+
+      <!-- usercard info -->
+      <div class="col-xs-8">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>{{$ctrl.contact.username}}</h3>
+            <a href="mailto:{{$ctrl.contact.email}}">{{$ctrl.contact.email}}</a>
+          </div>
+        </div>
+        <br>
+
+        <div class="row">
+          <div class="col-xs-12">
+
+            <!-- usercard buttons -->
+            <div class="btn-group">
+
+              <button class="btn btn-success"
+                      type="submit"
+                      ng-if="$ctrl.contact === $ctrl.editableContact"
+                      form="contactForm"
+                      ng-disabled="contactForm.$invalid">
+                <span>Save</span>
+                <span class="glyphicon glyphicon-ok"></span>
+              </button>
+
+              <button class="btn btn-info"
+                      ng-if="$ctrl.contact === $ctrl.editableContact"
+                      ng-click="$ctrl.cancelEdit($ctrl.contact)">
+                <span>Cancel</span>
+                <span class="glyphicon glyphicon-ban-circle"></span>
+              </button>
+
+              <button class="btn btn-warning"
+                      ng-click="$ctrl.startEdit($ctrl.contact)"
+                      ng-if="$ctrl.contact !== $ctrl.editableContact">
+                <span>Edit</span>
+                <span class="glyphicon glyphicon-edit"></span>
+              </button>
+
+              <button class="btn btn-danger"
+                      ng-click="$ctrl.removeContact({contact: $ctrl.contact})">
+                <span>Remove</span>
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+
+            </div>
+            <!-- end usercard buttons -->
+
+          </div>
+        </div>
+      </div>
+      <!-- end usercard info -->
+
+    </div>
+  </div>
+  <!-- end usercard header -->
+
+  <!-- usercard body -->
+  <div class="panel-body"
+       ng-show="$ctrl.contact === $ctrl.editableContact">
+    <form name="contactForm"
+          id="contactForm"
+          class="form-horizontal"
+          novalidate
+          ng-submit="$ctrl.saveChanges($ctrl.editableContact)">
+      
+      <!-- contact name -->
+      <div class="form-group"
+           ng-class="{'has-error': contactForm.contactName.$invalid &&
+                        !contactForm.contactName.$pristine,
+                      'has-success': contactForm.contactName.$valid &&
+                        !contactForm.contactName.$pristine}">
+
+        <label for="contactName" class="col-sm-2 control-label">Name</label>
+
+        <div class="col-sm-10">
+
+          <input type="text"
+                 class="form-control"
+                 name="contactName"
+                 id="contactName"
+                 required
+                 ng-maxlength="20"
+                 placeholder="Name"
+                 ng-model="$ctrl.editableContact.username">
+
+          <div ng-messages="contactForm.contactName.$error"
+               ng-if="!contactForm.contactName.$pristine">
+            <ng-message class="help-block"
+                        when="required">
+              You did not enter a field
+            </ng-message>
+            <ng-message class="help-block"
+                        when="maxlength">
+              Your field is too long
+            </ng-message>
+
+          </div>
+        </div>
+      </div>
+      <!-- end contact name -->
+
+      <!-- contact phone -->
+      <div class="form-group"
+           ng-class="{'has-error': contactForm.contactPhone.$invalid &&
+                        !contactForm.contactPhone.$pristine,
+                      'has-success': contactForm.contactPhone.$valid &&
+                        !contactForm.contactPhone.$pristine}">
+
+        <label for="contactPhone" class="col-sm-2 control-label">Phone</label>
+
+        <div class="col-sm-10">
+
+          <input type="tel"
+                 class="form-control"
+                 name="contactPhone"
+                 id="contactPhone"
+                 placeholder="Phone"
+                 ng-pattern="/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/"
+                 ng-model="$ctrl.editableContact.phone">
+
+          <div ng-messages="contactForm.contactPhone.$error"
+               ng-if="!contactForm.contactPhone.$pristine">
+            <ng-message class="help-block"
+                        when="pattern">
+              Phone format: 015728967778 or +4915728967778
+            </ng-message>
+          </div>
+
+        </div>
+      </div>
+      <!-- end contact phone -->
+
+      <!-- contact email -->
+      <div class="form-group"
+           ng-class="{'has-error': contactForm.contactEmail.$invalid &&
+                        !contactForm.contactEmail.$pristine,
+                      'has-success': contactForm.contactEmail.$valid &&
+                        !contactForm.contactEmail.$pristine}">
+
+        <label for="contactEmail" class="col-sm-2 control-label">Email</label>
+
+        <div class="col-sm-10">
+
+        <input type="email"
+               class="form-control"
+               name="contactEmail"
+               id="contactEmail"
+               placeholder="Email"
+               ng-model="$ctrl.editableContact.email">
+          
+          <div ng-messages="contactForm.contactEmail.$error">
+            <ng-message class="help-block"
+                when="email">
+              Email not valid
+            </ng-message>
+          </div>
+
+        </div>
+        
+      </div>
+      <!-- end contact email -->
+
+      <!-- contact address -->
+      <div class="form-group">
+
+        <label for="contactAddress" class="col-sm-2 control-label">Address</label>
+
+        <div class="col-sm-10">
+
+          <input type="text"
+                 name="contactAddress"
+                 id="contactAddress"
+                 class="form-control"
+                 placeholder="Address"
+                 ng-model="$ctrl.editableContact.address">
+
+        </div>
+      </div>
+      <!-- end contact address -->
+
+      <!-- contact avatar -->
+      <div class="form-group"
+           ng-class="{'has-error': contactForm.contactAvatar.$invalid &&
+                        !contactForm.contactAvatar.$pristine,
+                      'has-success': contactForm.contactAvatar.$valid &&
+                        !contactForm.contactAvatar.$pristine}">
+
+        <label for="contactAvatar" class="col-sm-2 control-label">Avatar</label>
+
+        <div class="col-sm-10">
+
+          <input type="URL"
+                 name="contactAvatar"
+                 id="contactAvatar"
+                 class="form-control"
+                 placeholder="Avatar Url 140x140"
+                 ng-model="$ctrl.editableContact.avatar">
+
+          <div ng-messages="contactForm.contactAvatar.$error"
+               ng-if="!contactForm.contactAvatar.$pristine">
+            <ng-message class="help-block" when="url">
+              URL is not correct
+            </ng-message>
+          </div>
+
+        </div>
+        
+      </div>
+      <!-- end contact avatar -->
+
+      <!-- contact age -->
+      <div class="form-group"
+           ng-class="{'has-error': contactForm.contactAge.$invalid &&
+                        !contactForm.contactAge.$pristine,
+                      'has-success': contactForm.contactAge.$valid &&
+                        !contactForm.contactAge.$pristine}">
+
+        <label for="contactAge" class="col-sm-2 control-label">Age</label>
+
+        <div class="col-sm-10">
+
+          <input type="number"
+                 name="contactAge"
+                 id="contactAge"
+                 min="0"
+                 max="120"
+                 class="form-control"
+                 placeholder="Age"
+                 ng-model="$ctrl.editableContact.age">
+
+          <div ng-messages="contactForm.contactAge.$error"
+               ng-if="!contactForm.contactAge.$pristine"
+               role="alert">
+            <ng-message class="help-block"
+                        when="min || max">
+              Age is not correct
+            </ng-message>
+          </div>
+
+        </div>
+        
+      </div>
+      <!-- end contact age -->
+
+    </form>
+  </div>
+  <!-- end usercard body -->
+
+</div>
+<!-- end usercard -->

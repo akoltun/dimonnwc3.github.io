@@ -1,0 +1,6 @@
+<button type="button"
+        class="btn btn-info"
+        ng-click="$ctrl.archive({message: $ctrl.selectedMessage})"
+        ng-if="$ctrl.selectedFolder.name !== 'archive'">
+  Архив <span class="glyphicon glyphicon-folder-close"></span>
+</button>

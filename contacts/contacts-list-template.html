@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-xs-3 col-xs-offset-0 col-md-offset-3">
+    <button class="btn btn-primary"
+            ng-click="$ctrl.createContact()">
+            <span>Add new Contact</span>
+            <span class="glyphicon glyphicon-plus-sign"></span>
+    </button>
+  </div>
+  <div class="col-xs-6 col-xs-offset-3 col-md-offset-0">
+    <form class="form-inline">
+      <label for="contactsSearch">
+      <input class="form-control" id="contactsSearch"
+             placeholder="Search contacts" 
+             ng-model="search.$">
+      </label>
+    </form>
+  </div>
+</div>
+
+
+<hr>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <!--контакты сортируются по имени. При создании нового он попадает вниз списка
+    и при добавлении первой буквы, резко прыгает на свое место в списке
+    это не очень красиво.
+    Как "Заморозить" положение контактов на время редактирования? -->
+    <contact-card ng-repeat="contact in $ctrl.contacts |
+                orderBy:'username' |
+                filter:search:$"
+              contact="contact",
+              editable-contact="$ctrl.editableContact"
+              remove-contact="$ctrl.removeContact(contact)"
+              update-contact="$ctrl.updateContact(contact)"
+              saved-contact="$ctrl.savedContact">
+    </contact-card>
+  </div>
+</div>
