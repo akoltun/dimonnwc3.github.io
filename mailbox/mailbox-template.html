@@ -1,28 +1,9 @@
-<section class="container mailbox">
-  <div class="row">
-    <div class="col-md-2">
-      <contacts selected-folder="$ctrl.selectedFolder"
-                     selected-message="$ctrl.selectedMessage"
-                     contacts-is-active="$ctrl.contactsIsActive">
-      </contacts>
-      <hr>
-      <folders-list folders="$ctrl.folders"
-                    messages="$ctrl.messages"
-                    selected-folder="$ctrl.selectedFolder"
-                    selected-message="$ctrl.selectedMessage"
-                    contacts-is-active="$ctrl.contactsIsActive">
-      </folders-list>
-    </div>
-    <div class="col-md-10">
-      <messages-list folders="$ctrl.folders"
-                     messages="$ctrl.messages"
-                     selected-folder="$ctrl.selectedFolder"
-                     selected-message="$ctrl.selectedMessage"
-                     contacts="$ctrl.contacts">
-      </messages-list>
-      <contacts-list ng-if="!$ctrl.selectedFolder"
-                      contacts="$ctrl.contacts">
-      </contacts-list>
-    </div>
+<div class="row">
+  <div class="col-md-2">
+    <folders-list>
+    </folders-list>
   </div>
-</section>
+  <div class="col-md-10">
+    <ui-view></ui-view>
+  </div>
+</div>

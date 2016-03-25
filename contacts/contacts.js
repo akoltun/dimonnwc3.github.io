@@ -2,22 +2,6 @@
 
 angular.module('app')
 
-.component('contacts', {
-  bindings: {
-    selectedFolder: '=',
-    selectedMessage: '=',
-    contactsIsActive: '='
-  },
-  controller: function() {
-    this.showContacts = () => {
-      this.selectedFolder = null;
-      this.selectedMessage = null;
-      this.contactsIsActive = true;
-    };
-  },
-  templateUrl: 'contacts/contacts-template.html'
-})
-
 .component('contactsList', {
   bindings: {
     contacts: '='

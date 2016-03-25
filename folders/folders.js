@@ -3,24 +3,18 @@
 angular.module('app')
 
 .component('foldersList', {
-  bindings: {
-    folders: '=',
-    selectedFolder: '=',
-    selectedMessage: '=',
-    contactsIsActive: '='
-  },
-  controller: function(FoldersListService) {
+  bindings: {},
+  controller: function(FoldersListService, MessagesListService, $state) {
 
-    FoldersListService.getFolders()
-      .then(folders => this.folders = folders)
-      .then(() => this.selectedFolder = this.folders[0])
+    FoldersListService.getFolders
+      .then(folders => {
+        this.folders = folders;
+        $state.go('folder', {
+          folderId: this.folders[0]._id
+        });
+      })
       .catch(console.error);
 
-    this.selectFolder = function(folder) {
-      this.selectedMessage = null;
-      this.contactsIsActive = false;
-      this.selectedFolder = folder;
-    };
   },
   templateUrl: 'folders/folders-list-template.html'
 })
@@ -28,9 +22,7 @@ angular.module('app')
 .service('FoldersListService', function($http, HelperService) {
   let getUrl = HelperService.getUrl;
 
-  this.getFolders = () => {
-    return $http.get(getUrl('folders.json'))
-      .then(res => HelperService.normalizeToArray(res.data));
-  };
+  this.getFolders = $http.get(getUrl('folders.json'))
+      .then(res => this.folders = HelperService.normalizeToArray(res.data));
 
 });

@@ -4,14 +4,16 @@ angular.module('app')
 
 .component('buttons', {
   bindings: {
-    selectedFolder: '=',
+    folder: '=',
     selectedMessage: '=',
-    asUnread: '=',
-    asImportant: '=',
-    remove: '=',
-    archive: '=',
-    spam: '=',
-    retrieve: '='
+    asUnread: '&',
+    asImportant: '&',
+    remove: '&',
+    archive: '&',
+    spam: '&',
+    retrieve: '&'
+  },
+  controller: function() {
   },
   templateUrl: 'messages/buttons-template.html'
 });

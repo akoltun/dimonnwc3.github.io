@@ -4,7 +4,43 @@
 //Вопросы:
 //contacts-list-template.html - вопрос 25 строка
 
-angular.module('app', ['ngMessages'])
+angular.module('app', ['ngMessages', 'ui.router'])
+
+.config(function($stateProvider) {
+
+  $stateProvider
+    .state('mail', {
+      url: '/mail',
+      template: '<mail-box></mail-box>'
+    })
+    .state('folder', {
+      parent: 'mail',
+      url: '/folders/:folderId',
+      templateUrl: 'messages/messages-template.html',
+      controller: function($stateParams) {
+        this.selectedFolderId = $stateParams.folderId;
+      },
+      controllerAs: '$ctrl'
+    })
+    .state('message', {
+      parent: 'mail',
+      url: '/messages/:messageId',
+      templateUrl: 'messages/single-message-template.html',
+      controller: function($stateParams) {
+        this.messageId = $stateParams.messageId;
+      },
+      controllerAs: '$ctrl'
+    })
+    .state('contacts', {
+      url: '/contacts',
+      templateUrl: 'contacts/contacts-template.html'
+    });
+
+})
+
+.run(function($state) {
+  $state.go('mail');
+})
 
 .service('HelperService', function() {
 
