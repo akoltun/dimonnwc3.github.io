@@ -15,6 +15,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="message in $ctrl.messages |
+        orderBy:'-date' |
         filter: {folderId: $ctrl.selectedFolder._id}"
           ng-class="{warning: message.isImportant}"
           message="message"
