@@ -6,7 +6,7 @@ angular.module('app')
   bindings: {
     selectedFolderId: '='
   },
-  controller: function(MessagesListService, FoldersListService) {
+  controller: function(MessagesListService, FoldersListService, $state) {
 
     MessagesListService.getMessages
       .then(messages => this.messages = messages);
@@ -31,7 +31,7 @@ angular.module('app')
   templateUrl: 'messages/messages-list-template.html'
 })
 
-.service('MessagesListService', function($http, HelperService, FoldersListService) {
+.service('MessagesListService', function($http, HelperService, FoldersListService, $state) {
   let getUrl = HelperService.getUrl;
 
   this.getMessages = $http.get(getUrl('messages.json'))
@@ -55,11 +55,14 @@ angular.module('app')
           folder._id = data._id;
         });
 
-    return $http.post(getUrl('messages.json'), message)
+    $http.post(getUrl('messages.json'), message)
       .then(res => {
         message._id = res.data.name;
         this.messages.push(message);
-        return message;
+      }).then(() => {
+        $state.go('folder', {
+          folderId: message.folderId
+        });
       });
   };
 
@@ -76,6 +79,11 @@ angular.module('app')
         return message;
       });
 
+  };
+
+  this.removeMessage = message => {
+    return $http.delete(getUrl('messages/' + message._id + '.json'))
+      .then(res => res.data);
   };
 
 })
@@ -120,7 +128,7 @@ angular.module('app')
       message.isUnread = !message.isUnread;
       MessagesListService.updateMessage(message)
         .then(data => {
-          message._id = data._id;
+          Object.assign(message, data);
         });
     };
 
@@ -128,11 +136,12 @@ angular.module('app')
       message.isImportant = !message.isImportant;
       MessagesListService.updateMessage(message)
         .then(data => {
-          message._id = data._id;
+          Object.assign(message, data);
         });
     };
 
     this.archive = message => {
+
       if (!message.oldFolderId) message.oldFolderId = message.folderId;
       if (!message.oldFolderName) message.oldFolderName = this.folder.name;
 
@@ -141,18 +150,17 @@ angular.module('app')
 
       MessagesListService.updateMessage(message)
         .then(data => {
-          message._id = data._id;
+          Object.assign(message, data);
         });
 
       this.folder.messages--;
       FoldersListService.updateFolder(this.folder)
         .then(data => {
           this.folder._id = data._id;
-        });
-
-      this.folder = folder;
-      this.folder.messages++;
-      FoldersListService.updateFolder(this.folder)
+          this.folder = folder;
+          this.folder.messages++;
+          return FoldersListService.updateFolder(this.folder);
+        })
         .then(data => {
           this.folder._id = data._id;
         });
@@ -168,18 +176,17 @@ angular.module('app')
 
       MessagesListService.updateMessage(message)
         .then(data => {
-          message._id = data._id;
+          Object.assign(message, data);
         });
 
       this.folder.messages--;
       FoldersListService.updateFolder(this.folder)
         .then(data => {
           this.folder._id = data._id;
-        });
-
-      this.folder = folder;
-      this.folder.messages++;
-      FoldersListService.updateFolder(this.folder)
+          this.folder = folder;
+          this.folder.messages++;
+          return FoldersListService.updateFolder(this.folder);
+        })
         .then(data => {
           this.folder._id = data._id;
         });
@@ -187,6 +194,7 @@ angular.module('app')
     };
 
     this.retrieve = message => {
+
       let folder = this.folders.find(f => f._id === message.oldFolderId);
 
       delete message.oldFolderId;
@@ -196,19 +204,18 @@ angular.module('app')
       FoldersListService.updateFolder(this.folder)
         .then(data => {
           this.folder._id = data._id;
+          this.folder = folder;
+          this.folder.messages++;
+          return FoldersListService.updateFolder(this.folder);
+        })
+        .then(data => {
+          this.folder._id = data._id;
         });
 
       message.folderId = folder._id;
       MessagesListService.updateMessage(message)
         .then(data => {
-          message._id = data._id;
-        });
-
-      this.folder = folder;
-      this.folder.messages++;
-      FoldersListService.updateFolder(this.folder)
-        .then(data => {
-          this.folder._id = data._id;
+          Object.assign(message, data);
         });
 
     };
@@ -218,16 +225,14 @@ angular.module('app')
       this.messages.splice(index, 1);
       this.selectedMessage = null;
       this.folder.messages--;
-      $state.go('folder', {
-        folderId: this.folder._id
-      });
-      MessagesListService.updateMessage(message)
-        .then(data => {
-          message._id = data._id;
-        });
-      FoldersListService.updateFolder(this.folder)
-        .then(data => {
-          this.folder._id = data._id;
+      
+      MessagesListService.removeMessage(message)
+        .then(message => FoldersListService.updateFolder(this.folder))
+        .then(data => this.folder._id = data._id)
+        .then(id => {
+          $state.go('folder', {
+            folderId: id
+          });
         });
     };
 
@@ -242,11 +247,20 @@ angular.module('app')
 
 .component('newMessage', {
   bindings: {},
-  controller: function(MessagesListService) {
+  controller: function(MessagesListService, $state) {
+
     this.addMessage = MessagesListService.addMessage;
+
+    this.clearMessage = message => {
+      message.to = '';
+      message.subject = '';
+      message.content = '';
+    };
+
     this.message = {
       from: 'steve@example.com'
     };
+
   },
   templateUrl: 'messages/new-message-form-template.html'
 });

@@ -9,9 +9,9 @@ angular.module('app')
     FoldersListService.getFolders
       .then(folders => {
         this.folders = folders;
-        // $state.go('folder', {
-        //   folderId: this.folders[0]._id
-        // });
+        $state.go('folder', {
+          folderId: this.folders[0]._id
+        });
       })
       .catch(console.error);
 

@@ -43,9 +43,9 @@ angular.module('app', ['ngMessages', 'ui.router'])
 
 })
 
-// .run(function($state) {
-//   $state.go('mail');
-// })
+.run(function($state) {
+  $state.go('mail');
+})
 
 .service('HelperService', function() {
 

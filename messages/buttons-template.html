@@ -35,14 +35,14 @@
   <button type="button"
           class="btn btn-info"
           ng-click="$ctrl.archive({message: $ctrl.selectedMessage})"
-          ng-if="$ctrl.selectedFolder.name !== 'archive'">
+          ng-if="!$ctrl.selectedMessage.oldFolderId">
     Архив <span class="glyphicon glyphicon-folder-close"></span>
   </button>
 
   <button type="button"
           class="btn btn-warning"
           ng-click="$ctrl.spam({message: $ctrl.selectedMessage})"
-          ng-if="$ctrl.selectedFolder.name !== 'spam'">
+          ng-if="!$ctrl.selectedMessage.oldFolderId">
       Спам <span class="glyphicon glyphicon-thumbs-down"></span>
   </button>
 
