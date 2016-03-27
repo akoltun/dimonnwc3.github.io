@@ -1,0 +1,103 @@
+<form class="form-horizontal"
+      name="messageForm"
+      id="messageForm"
+      ng-submit="$ctrl.addMessage($ctrl.message)">
+  <div class="panel panel-primary">
+    
+    <!-- panel head -->
+    <div class="panel-heading">
+      <b>New Message</b> (sent)
+    </div>
+    <!-- end panel head -->
+
+    <!-- panel body -->
+    <div class="panel-body">
+
+      <!-- messageFrom -->
+      <div class="form-group">
+  
+        <label for="messageFrom" class="col-sm-1 control-label">From</label>
+  
+        <div class="col-sm-11">
+  
+          <input type="email"
+                 class="form-control"
+                 id="messageFrom"
+                 name="messageFrom"
+                 placeholder="From"
+                 disabled
+                 ng-model="$ctrl.message.from">
+  
+        </div>
+      </div>
+      <!-- end messageFrom -->
+
+      <!-- messageTo -->
+      <div class="form-group">
+  
+        <label for="messageTo" class="col-sm-1 control-label">To</label>
+  
+        <div class="col-sm-11">
+  
+          <input type="email"
+                 class="form-control"
+                 id="messageTo"
+                 name="messageTo"
+                 placeholder="To"
+                 ng-model="$ctrl.message.to">
+  
+        </div>
+      </div>
+      <!-- end messageTo -->
+  
+      <!-- messageSubject -->
+      <div class="form-group">
+  
+        <label for="messageSubject" class="col-sm-1 control-label">Subject</label>
+  
+        <div class="col-sm-11">
+  
+          <input type="text"
+                 class="form-control"
+                 id="messageSubject"
+                 name="messageSubject"
+                 placeholder="Subject"
+                 ng-model="$ctrl.message.subject">
+  
+        </div>
+      </div>
+      <!-- end messageSubject -->
+      <hr>
+      <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-1">
+          <div class="btn-group">
+            <button class="btn btn-success" type="submit">Send</button>
+            <button class="btn btn-danger">Clear</button>
+          </div>
+        </div>
+      </div>
+      <hr>
+  
+      <!-- messageContent -->
+      <div class="form-group">
+  
+        <label for="messageContent" class="col-sm-1 control-label">Text</label>
+  
+        <div class="col-sm-11">
+
+          <textarea class="form-control"
+                    rows="12"
+                    id="messageContent"
+                    name="messageContent"
+                    placeholder="Message text..."
+                    ng-model="$ctrl.message.content"></textarea>
+  
+        </div>
+      </div>
+      <!-- end messageContent -->
+
+    </div>
+    <!-- end panel body -->
+
+  </div>
+</form>

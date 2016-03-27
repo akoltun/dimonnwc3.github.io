@@ -31,6 +31,11 @@ angular.module('app', ['ngMessages', 'ui.router'])
       },
       controllerAs: '$ctrl'
     })
+    .state('newMessage', {
+      parent: 'mail',
+      url: '/new-message',
+      template: '<new-message></new-message>'
+    })
     .state('contacts', {
       url: '/contacts',
       templateUrl: 'contacts/contacts-template.html'
@@ -38,9 +43,9 @@ angular.module('app', ['ngMessages', 'ui.router'])
 
 })
 
-.run(function($state) {
-  $state.go('mail');
-})
+// .run(function($state) {
+//   $state.go('mail');
+// })
 
 .service('HelperService', function() {
 
