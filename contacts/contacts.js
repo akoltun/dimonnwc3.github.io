@@ -3,9 +3,7 @@
 angular.module('app')
 
 .component('contactsList', {
-  bindings: {
-    contacts: '='
-  },
+  bindings: {},
   controller: function(ContactService) {
 
     this.savedContact = {};
@@ -75,8 +73,8 @@ angular.module('app')
 
   let getUrl = HelperService.getUrl;
 
-  this.getContacts = this.updateContacts = $http.get(getUrl('contacts.json'))
-    .then(res => HelperService.normalizeToArray(res.data));
+  this.getContacts = $http.get(getUrl('contacts.json'))
+    .then(res => this.contacts = HelperService.normalizeToArray(res.data));
 
   this.addContact = conctact => {
     return $http.post(getUrl('contacts.json'), conctact)
@@ -94,7 +92,6 @@ angular.module('app')
     delete contact._id;
     return $http.put(getUrl('contacts/' + id + '.json'), contact)
       .then(res => {
-        contact = res.data;
         contact._id = id;
         return contact;
       });

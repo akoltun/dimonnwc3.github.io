@@ -1,6 +1,6 @@
 <button type="button"
         class="btn btn-warning"
-        ng-click="$ctrl.spam({message: $ctrl.selectedMessage})"
-        ng-if="$ctrl.selectedFolder.name !== 'spam'">
+        ng-click="$ctrl.spam($ctrl.selectedMessage)"
+        ng-if="$ctrl.folder.name !== 'spam'">
     Спам <span class="glyphicon glyphicon-thumbs-down"></span>
 </button>

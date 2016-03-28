@@ -1,10 +1,23 @@
 <div class="row">
   <div class="col-md-2">
-    <folders-list>
+
+    <!-- folders list -->
+    <folders-list folders="$ctrl.folders"
+                  selected-message="$ctrl.selectedMessage">
     </folders-list>
+    <!-- end folders list -->
     <hr>
-    <write-message>
-    </write-message>
+    <!-- write new message -->
+    <ul class="nav nav-pills nav-stacked">
+      <li ui-sref-active="active">
+        <a ui-sref="new-message">
+            <span class="glyphicon glyphicon-pencil"></span> &nbsp;
+            Write message
+        </a>
+      </li>
+    </ul>
+    <!-- end write new message -->
+
   </div>
   <div class="col-md-10">
     <ui-view></ui-view>

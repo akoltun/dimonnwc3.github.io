@@ -1,2 +1,24 @@
-<message-view message-id="$ctrl.messageId">
-</message-view>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <b>{{$ctrl.selectedMessage.subject}}</b> ({{$ctrl.folder.name}})
+  </div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <b>From:</b> {{$ctrl.selectedMessage.from}}
+    </li>
+    <li class="list-group-item">
+      <b>To:</b> {{$ctrl.selectedMessage.to}}
+    </li>
+    <li class="list-group-item">
+      <b>Date:</b> {{$ctrl.selectedMessage.date | date:'dd/MM/yyyy'}}
+    </li>
+    <li class="list-group-item">
+      <buttons folder="$ctrl.folder"
+               selected-message="$ctrl.selectedMessage">
+      </buttons>
+    </li>
+  </ul>
+  <div class="panel-body">
+    <p>{{$ctrl.selectedMessage.content}}</p>
+  </div>
+</div>

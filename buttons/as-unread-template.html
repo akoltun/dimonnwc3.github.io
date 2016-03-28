@@ -1,6 +1,6 @@
 <button type="button"
         class="btn"
-        ng-click="$ctrl.asUnread({message: $ctrl.selectedMessage})"
+        ng-click="$ctrl.asUnread($ctrl.selectedMessage)"
         ng-class="$ctrl.selectedMessage.isUnread ?
                   'btn-success' : 'btn-primary'">
   {{$ctrl.selectedMessage.isUnread ?

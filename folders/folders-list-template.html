@@ -1,9 +1,10 @@
 <ul class="nav nav-pills nav-stacked">
   <li ng-repeat="folder in $ctrl.folders"
-      ui-sref-active="active">
-    <a ui-sref="folder({folderId: folder._id})">
-        {{folder.name}}
-        <span class="badge pull-right">{{folder.messages}}</span>
+      ui-sref-active="active"
+      ng-class="{active: $ctrl.selectedMessage.folderId === folder._id}">
+    <a ui-sref="folder({name: folder.name})">
+      {{folder.name}}
+      <span class="badge pull-right">{{folder.messages}}</span>
     </a>
   </li>
 </ul>

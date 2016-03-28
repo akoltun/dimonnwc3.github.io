@@ -1,7 +1,8 @@
 <button type="button"
       class="btn btn-success"
-      ng-click="$ctrl.retrieve({message: $ctrl.selectedMessage})"
-      ng-if="$ctrl.selectedMessage.oldFolderId">
-  Вернуть в {{$ctrl.selectedMessage.oldFolderName}}
+      ng-click="$ctrl.retrieve($ctrl.selectedMessage)"
+      ng-if="($ctrl.folder.name === 'spam') ||
+             ($ctrl.folder.name === 'archive')">
+  Вернуть в Inbox
   <span class="glyphicon glyphicon-share-alt"></span>
 </button>

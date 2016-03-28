@@ -1,7 +1,7 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    {{$ctrl.getMessagesCount($ctrl.selectedFolderId)}} messages in 
-    <b>{{$ctrl.getFolderNameById($ctrl.selectedFolderId)}}</b>
+    {{$ctrl.messages.length + ' messages in'}}
+    <b>{{$ctrl.selectedFolder.name}}</b>
   </div>
   <table class="table table-striped table table-hover">
     <thead>
@@ -13,12 +13,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="message in $ctrl.messages |
-                     orderBy:'-date' |
-                     filter: {folderId: $ctrl.selectedFolderId}"
+      <tr ng-repeat="message in $ctrl.messages | orderBy:'-date'"
           ng-class="{warning: message.isImportant}"
           message="message"
-          ui-sref="message({messageId: message._id})">
+          ui-sref="message({id: message._id})">
       </tr>
     </tbody>
   </table>

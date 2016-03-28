@@ -1,6 +1,6 @@
 <button type="button"
         class="btn"
-        ng-click="$ctrl.asImportant({message: $ctrl.selectedMessage})"
+        ng-click="$ctrl.asImportant($ctrl.selectedMessage)"
         ng-class="$ctrl.selectedMessage.isImportant ?
                   'btn-success' : 'btn-warning'">
   {{$ctrl.selectedMessage.isImportant ?

@@ -1,7 +1,8 @@
 <form class="form-horizontal"
       name="messageForm"
       id="messageForm"
-      ng-submit="$ctrl.addMessage($ctrl.message)">
+      novalidate
+      ng-submit="$ctrl.sendMessage($ctrl.message)">
   <div class="panel panel-primary">
     
     <!-- panel head -->
@@ -33,7 +34,11 @@
       <!-- end messageFrom -->
 
       <!-- messageTo -->
-      <div class="form-group">
+      <div class="form-group"
+            ng-class="{'has-error': messageForm.messageTo.$invalid &&
+                        !messageForm.messageTo.$pristine,
+                      'has-success': messageForm.messageTo.$valid &&
+                        !messageForm.messageTo.$pristine}">
   
         <label for="messageTo" class="col-sm-1 control-label">To</label>
   
@@ -44,14 +49,31 @@
                  id="messageTo"
                  name="messageTo"
                  placeholder="To"
+                 required
                  ng-model="$ctrl.message.to">
+
+          <div ng-messages="messageForm.messageTo.$error"
+               ng-if="!messageForm.messageTo.$pristine">
+            <ng-message class="help-block"
+                        when="required">
+              You did not enter a field
+            </ng-message>
+            <ng-message class="help-block"
+                        when="email">
+              Email not valid
+            </ng-message>
+          </div>
   
         </div>
       </div>
       <!-- end messageTo -->
   
       <!-- messageSubject -->
-      <div class="form-group">
+      <div class="form-group"
+           ng-class="{'has-error': messageForm.messageSubject.$invalid &&
+                        !messageForm.messageSubject.$pristine,
+                      'has-success': messageForm.messageSubject.$valid &&
+                        !messageForm.messageSubject.$pristine}">
   
         <label for="messageSubject" class="col-sm-1 control-label">Subject</label>
   
@@ -62,7 +84,22 @@
                  id="messageSubject"
                  name="messageSubject"
                  placeholder="Subject"
+                 required
+                 ng-maxlength="30"
                  ng-model="$ctrl.message.subject">
+
+          <div ng-messages="messageForm.messageSubject.$error"
+               ng-if="!messageForm.messageSubject.$pristine">
+            <ng-message class="help-block"
+                        when="required">
+              You did not enter a field
+            </ng-message>
+            <ng-message class="help-block"
+                        when="maxlength">
+              Your field is too long
+            </ng-message>
+
+          </div>
   
         </div>
       </div>
@@ -72,7 +109,9 @@
         <div class="col-sm-10 col-sm-offset-1">
           <div class="btn-group">
             <button class="btn btn-success"
-                    type="submit">
+                    type="submit"
+                    form="messageForm"
+                    ng-disabled="messageForm.$invalid">
               Send
             </button>
             <button class="btn btn-danger"

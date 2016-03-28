@@ -1,50 +1,52 @@
 'use strict';
 //Dmitrii Solovev
 
-//Вопросы:
-//contacts-list-template.html - вопрос 25 строка
 
 angular.module('app', ['ngMessages', 'ui.router'])
 
-.config(function($stateProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
+
+  $urlRouterProvider.otherwise('/mail/folder/inbox');
 
   $stateProvider
     .state('mail', {
       url: '/mail',
-      template: '<mail-box></mail-box>'
+      template: `<mail-box folders="$ctrl.folders"
+                            messages="$ctrl.messages">
+                 </mail-box>`
     })
     .state('folder', {
       parent: 'mail',
-      url: '/folders/:folderId',
-      templateUrl: 'messages/messages-template.html',
-      controller: function($stateParams) {
-        this.selectedFolderId = $stateParams.folderId;
-      },
-      controllerAs: '$ctrl'
+      url: '/folder/:name',
+      template: `<messages-list folders="$ctrl.folders"
+                                messages="$ctrl.messages"
+                                selected-message="$ctrl.selectedMessage">
+                 </messages-list>`
     })
     .state('message', {
       parent: 'mail',
-      url: '/messages/:messageId',
-      templateUrl: 'messages/single-message-template.html',
-      controller: function($stateParams) {
-        this.messageId = $stateParams.messageId;
-      },
-      controllerAs: '$ctrl'
+      url: '/message/:id',
+      template: `<single-message folders="$ctrl.folders"
+                                 messages="$ctrl.messages"
+                                 selected-message="$ctrl.selectedMessage">
+                 </single-message>`
     })
-    .state('newMessage', {
+    .state('new-message', {
       parent: 'mail',
       url: '/new-message',
       template: '<new-message></new-message>'
     })
     .state('contacts', {
       url: '/contacts',
-      templateUrl: 'contacts/contacts-template.html'
+      template: `<contacts-list></contacts-list>`
     });
 
 })
 
-.run(function($state) {
-  $state.go('mail');
+.run(function(FoldersService, MessagesService, ContactService) {
+  FoldersService.getFolders;
+  MessagesService.getMessages;
+  ContactService.getContacts;
 })
 
 .service('HelperService', function() {
